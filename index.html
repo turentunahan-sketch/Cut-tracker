@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0049)file:///C:/Users/tunah/Downloads/cut-tracker.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -91,6 +91,7 @@
   .m-water .name{color:var(--water);}     .m-water .bar>i{background:var(--water);}
   .m-steps .name{color:var(--steps);}     .m-steps .bar>i{background:var(--steps);}
   .m-sleep .name{color:var(--sleep);}     .m-sleep .bar>i{background:var(--sleep);}
+  .m-cal .name{color:#F472B6;}             .m-cal .bar>i{background:#F472B6;}
 
   /* meal chips */
   .feeds{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 12px;}
@@ -210,15 +211,15 @@
   <section class="view on" id="view-today">
     <div class="datebar">
       <button id="prevDay" aria-label="Previous day">‹</button>
-      <div class="datelabel"><div class="d" id="dateLabel">—</div><div class="sub" id="dateSub"></div></div>
-      <button id="nextDay" aria-label="Next day">›</button>
+      <div class="datelabel"><div class="d" id="dateLabel">Wed, Jul 1</div><div class="sub" id="dateSub">Today</div></div>
+      <button id="nextDay" aria-label="Next day" disabled="">›</button>
     </div>
 
     <!-- weight hero -->
     <div class="card hero">
       <div class="row"><span class="lbl">Morning Weight</span><span class="delta flat" id="wDelta">—</span></div>
-      <div id="wBigWrap"><span class="big mono" id="wBig">—</span></div>
-      <div class="empty" id="wEmpty" style="display:none">Log your morning weight to start the trend.</div>
+      <div id="wBigWrap" style="display: none;"><span class="big mono" id="wBig">—</span></div>
+      <div class="empty" id="wEmpty" style="">Log your morning weight to start the trend.</div>
       <svg class="spark" id="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true"></svg>
       <div class="inputrow" style="margin-top:6px">
         <input type="number" class="num" id="weight" inputmode="decimal" step="0.1" placeholder="weight">
@@ -230,8 +231,8 @@
     <div class="card m-protein">
       <div class="top"><span class="name">Protein</span>
         <span class="read"><b id="pRead">0</b><span class="t" id="pTarget"> / 190 g</span></span></div>
-      <div class="bar"><i id="pBar"></i></div>
-      <div class="feeds" id="feeds"></div>
+      <div class="bar"><i id="pBar" style="width: 0%;"></i></div>
+      <div class="feeds" id="feeds"><span class="none">No feedings logged yet.</span></div>
       <div class="quick">
         <button data-feed="25">+25</button><button data-feed="40">+40</button><button data-feed="50">+50</button>
       </div>
@@ -239,14 +240,30 @@
         <input type="number" class="num" id="feedCustom" inputmode="numeric" placeholder="custom g">
         <button id="feedAdd">Add</button>
       </div>
-      <div class="hint" id="feedCount" style="margin-top:9px"></div>
+      <div class="hint" id="feedCount" style="margin-top:9px">Log each protein feeding — aim for 3–4 of 40–50 g.</div>
+    </div>
+
+    <!-- calories meals -->
+    <div class="card m-cal">
+      <div class="top"><span class="name">Calories</span>
+        <span class="read"><b id="cRead">0</b><span class="t" id="cTarget"> / 2,250 kcal</span></span></div>
+      <div class="bar"><i id="cBar" style="width: 0%;"></i></div>
+      <div class="feeds" id="calFeeds"><span class="none">No meals logged yet.</span></div>
+      <div class="quick">
+        <button data-cal="300">+300</button><button data-cal="500">+500</button><button data-cal="700">+700</button>
+      </div>
+      <div class="addfeed">
+        <input type="number" class="num" id="calCustom" inputmode="numeric" placeholder="custom kcal">
+        <button id="calAdd">Add</button>
+      </div>
+      <div class="hint" id="calCount" style="margin-top:9px">Log each meal's calories as you eat.</div>
     </div>
 
     <!-- water -->
     <div class="card m-water">
       <div class="top"><span class="name">Water</span>
         <span class="read"><b id="waterRead">0.0</b><span class="t" id="waterTarget"> / 3.3 L</span></span></div>
-      <div class="bar"><i id="waterBar"></i></div>
+      <div class="bar"><i id="waterBar" style="width: 0%;"></i></div>
       <div class="quick">
         <button data-add="water" data-v="250">+250</button>
         <button data-add="water" data-v="500">+500</button>
@@ -259,7 +276,7 @@
     <div class="card m-steps">
       <div class="top"><span class="name">Steps</span>
         <span class="read"><b id="sRead">0</b><span class="t" id="sTarget"> / 7,500</span></span></div>
-      <div class="bar"><i id="sBar"></i></div>
+      <div class="bar"><i id="sBar" style="width: 0%;"></i></div>
       <div class="inputrow" style="margin-top:12px"><input type="number" class="num" id="steps" inputmode="numeric" step="100" placeholder="steps today"></div>
     </div>
 
@@ -267,7 +284,7 @@
     <div class="card m-sleep">
       <div class="top"><span class="name">Sleep</span>
         <span class="read"><b id="slRead">0.0</b><span class="t" id="slTarget"> / 8 h</span></span></div>
-      <div class="bar"><i id="slBar"></i></div>
+      <div class="bar"><i id="slBar" style="width: 0%;"></i></div>
       <div class="inputrow" style="margin-top:12px"><input type="number" class="num" id="sleep" inputmode="decimal" step="0.5" placeholder="hours last night"><span class="unit">h</span></div>
       <div class="hint" style="margin-top:9px">Poor sleep spikes cortisol &amp; aldosterone → water retention. This is a real lever.</div>
     </div>
@@ -367,6 +384,7 @@
   <div class="sheet">
     <h2>Settings</h2>
     <p class="desc">Edit your targets. Changes apply everywhere instantly.</p>
+    <div class="setrow"><label>Calorie target (kcal)</label><input type="number" class="num" id="setKcal" inputmode="numeric" step="50"></div>
     <div class="setrow"><label>Protein target (g)</label><input type="number" class="num" id="setProtein" inputmode="numeric"></div>
     <div class="setrow"><label>Water target (L)</label><input type="number" class="num" id="setWater" inputmode="decimal" step="0.1"></div>
     <div class="setrow"><label>Steps target</label><input type="number" class="num" id="setSteps" inputmode="numeric" step="500"></div>
@@ -400,7 +418,7 @@
   "use strict";
 
   /* ===== EDIT DEFAULT TARGETS HERE ===== */
-  var DEFAULTS = { protein:190, water:3300, steps:7500, sleep:8, lenDays:21 }; // water in ml
+  var DEFAULTS = { protein:190, water:3300, steps:7500, sleep:8, kcal:2250, lenDays:21 }; // water in ml
   /* ===================================== */
 
   var KEY = "cut3wk.v2";
@@ -418,6 +436,7 @@
   if(!data.__meta) data.__meta = {};
   var meta = data.__meta;
   if(!meta.targets) meta.targets = { protein:DEFAULTS.protein, water:DEFAULTS.water, steps:DEFAULTS.steps, sleep:DEFAULTS.sleep };
+  if(meta.targets.kcal==null) meta.targets.kcal = DEFAULTS.kcal;
   if(meta.lenDays==null) meta.lenDays = DEFAULTS.lenDays;
 
   // dates
@@ -433,6 +452,7 @@
   function cleanDay(iso){
     var e=data[iso]; if(!e) return;
     if((!e.meals||!e.meals.length)) delete e.meals;
+    if((!e.cals||!e.cals.length)) delete e.cals;
     var keys=Object.keys(e);
     if(keys.length===0) delete data[iso];
   }
@@ -442,6 +462,7 @@
 
   // ---------- TODAY render ----------
   function proteinTotal(e){ return (e.meals||[]).reduce(function(a,b){return a+b;},0); }
+  function calorieTotal(e){ return (e.cals||[]).reduce(function(a,b){return a+b;},0); }
 
   function render(){
     var iso=isoOf(current), e=data[iso]||{}, T=meta.targets;
@@ -453,6 +474,7 @@
 
     // targets text
     $("pTarget").textContent=" / "+T.protein+" g";
+    $("cTarget").textContent=" / "+fmt(T.kcal)+" kcal";
     $("waterTarget").textContent=" / "+(T.water/1000).toFixed(1)+" L";
     $("sTarget").textContent=" / "+fmt(T.steps);
     $("slTarget").textContent=" / "+T.sleep+" h";
@@ -471,6 +493,14 @@
     renderFeeds(e);
     var cnt=(e.meals||[]).length;
     $("feedCount").textContent = cnt? (cnt+" feeding"+(cnt>1?"s":"")+" · aim for 3–4 of 40–50 g") : "Log each protein feeding — aim for 3–4 of 40–50 g.";
+
+    // calories
+    var c=calorieTotal(e);
+    $("cRead").textContent=fmt(c);
+    $("cBar").style.width=Math.min(100,c/T.kcal*100)+"%";
+    renderCalFeeds(e);
+    var ccnt=(e.cals||[]).length, left=T.kcal-c;
+    $("calCount").textContent = ccnt? (ccnt+" meal"+(ccnt>1?"s":"")+" · "+(left>=0? (fmt(left)+" kcal left") : (fmt(-left)+" kcal over"))) : "Log each meal's calories as you eat.";
 
     // water
     var w=e.water||0;
@@ -513,6 +543,24 @@
       x.addEventListener("click",function(){
         var i=+x.getAttribute("data-i");
         var ee=entry(isoOf(current)); ee.meals.splice(i,1);
+        cleanDay(isoOf(current)); persist(); render();
+      });
+    });
+  }
+
+  function renderCalFeeds(e){
+    var box=$("calFeeds"); box.innerHTML="";
+    var meals=e.cals||[];
+    if(!meals.length){ box.innerHTML='<span class="none">No meals logged yet.</span>'; return; }
+    meals.forEach(function(g,i){
+      var el=document.createElement("span"); el.className="feed";
+      el.innerHTML='<b>'+g+'</b> kcal <span class="x" data-i="'+i+'">×</span>';
+      box.appendChild(el);
+    });
+    Array.prototype.forEach.call(box.querySelectorAll(".x"),function(x){
+      x.addEventListener("click",function(){
+        var i=+x.getAttribute("data-i");
+        var ee=entry(isoOf(current)); ee.cals.splice(i,1);
         cleanDay(isoOf(current)); persist(); render();
       });
     });
@@ -604,6 +652,19 @@
   });
   $("feedCustom").addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ $("feedAdd").click(); } });
 
+  function addCal(k){
+    if(!k||k<=0) return;
+    ensureStart(); var e=entry(isoOf(current)); if(!e.cals) e.cals=[];
+    e.cals.push(Math.round(k)); persist(); render();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-cal]"),function(b){
+    b.addEventListener("click",function(){ addCal(+b.getAttribute("data-cal")); });
+  });
+  $("calAdd").addEventListener("click",function(){
+    var v=+$("calCustom").value; if(v>0){ addCal(v); $("calCustom").value=""; }
+  });
+  $("calCustom").addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ $("calAdd").click(); } });
+
   Array.prototype.forEach.call(document.querySelectorAll("[data-add]"),function(b){
     b.addEventListener("click",function(){
       ensureStart(); var f=b.getAttribute("data-add"),add=+b.getAttribute("data-v");
@@ -693,11 +754,13 @@
   }
   function renderStats(){
     var ap=avgOf(function(e){return proteinTotal(e);});
+    var acal=avgOf(function(e){return calorieTotal(e);});
     var aw=avgOf(function(e){return e.water;});
     var as=avgOf(function(e){return e.steps;});
     var asl=avgOf(function(e){return e.sleep;});
     var ab=avgOf(function(e){return e.bloat;});
     var cells=[
+      {k:"Calories",v:acal!=null?fmt(Math.round(acal)):"—",u:"kcal"},
       {k:"Protein",v:ap!=null?Math.round(ap):"—",u:"g"},
       {k:"Water",v:aw!=null?(aw/1000).toFixed(1):"—",u:"L"},
       {k:"Steps",v:as!=null?fmt(Math.round(as)):"—",u:""},
@@ -716,7 +779,14 @@
       ds.forEach(function(k){ var v=fn(data[k]); if(v!=null && v>0){ tot++; if(v>=goal) hit++; } });
       return tot? Math.round(hit/tot*100):0;
     }
+    // calories: staying at/under target is the win, so invert
+    function rateUnder(fn,goal){
+      var hit=0,tot=0;
+      ds.forEach(function(k){ var v=fn(data[k]); if(v!=null && v>0){ tot++; if(v<=goal) hit++; } });
+      return tot? Math.round(hit/tot*100):0;
+    }
     var rows=[
+      {l:"Cals ≤ tgt",p:rateUnder(function(e){return calorieTotal(e)||null;},T.kcal),c:"#F472B6"},
       {l:"Protein",p:rate(function(e){return proteinTotal(e)||null;},T.protein),c:"var(--protein)"},
       {l:"Water",p:rate(function(e){return e.water;},T.water),c:"var(--water)"},
       {l:"Steps",p:rate(function(e){return e.steps;},T.steps),c:"var(--steps)"},
@@ -733,9 +803,10 @@
     box.innerHTML="";
     ds.forEach(function(k){
       var e=data[k],d=fromIso(k);
-      var p=proteinTotal(e);
+      var p=proteinTotal(e), c=calorieTotal(e);
       var parts=[];
       if(e.weight!=null) parts.push('<span class="w">'+(+e.weight).toFixed(1)+' kg</span>');
+      if(c) parts.push(fmt(c)+'kcal');
       if(p) parts.push(p+'P');
       if(e.water) parts.push((e.water/1000).toFixed(1)+'L');
       if(e.steps) parts.push(fmt(e.steps));
@@ -764,7 +835,7 @@
   function openSettings(){
     var T=meta.targets;
     $("setProtein").value=T.protein; $("setWater").value=(T.water/1000); $("setSteps").value=T.steps;
-    $("setSleep").value=T.sleep; $("setLen").value=meta.lenDays; $("setStart").value=meta.start||isoOf(today);
+    $("setSleep").value=T.sleep; $("setKcal").value=T.kcal; $("setLen").value=meta.lenDays; $("setStart").value=meta.start||isoOf(today);
     sScrim.classList.add("open");
   }
   function closeSettings(){ sScrim.classList.remove("open"); }
@@ -774,6 +845,7 @@
   $("saveSettings").addEventListener("click",function(){
     var T=meta.targets;
     T.protein=Math.max(1,Math.round(+$("setProtein").value||T.protein));
+    T.kcal=Math.max(1,Math.round(+$("setKcal").value||T.kcal));
     T.water=Math.max(100,Math.round((+$("setWater").value|| (T.water/1000))*1000));
     T.steps=Math.max(100,Math.round(+$("setSteps").value||T.steps));
     T.sleep=Math.max(1,+(+$("setSleep").value||T.sleep));
@@ -783,7 +855,7 @@
   });
   $("resetBtn").addEventListener("click",function(){
     if(!confirm("Erase ALL logged data? This cannot be undone. Back up first.")) return;
-    data={__meta:{targets:{protein:DEFAULTS.protein,water:DEFAULTS.water,steps:DEFAULTS.steps,sleep:DEFAULTS.sleep},lenDays:DEFAULTS.lenDays}};
+    data={__meta:{targets:{protein:DEFAULTS.protein,water:DEFAULTS.water,steps:DEFAULTS.steps,sleep:DEFAULTS.sleep,kcal:DEFAULTS.kcal},lenDays:DEFAULTS.lenDays}};
     mem=data; meta=data.__meta; persist(); closeSettings(); current=new Date(today); render(); toast("Erased");
   });
 
@@ -820,7 +892,8 @@
       if(typeof parsed!=="object"||parsed===null){ toast("Not a valid backup"); return; }
       if(!parsed.__meta) parsed.__meta=meta;
       data=parsed; mem=data; meta=data.__meta;
-      if(!meta.targets) meta.targets={protein:DEFAULTS.protein,water:DEFAULTS.water,steps:DEFAULTS.steps,sleep:DEFAULTS.sleep};
+      if(!meta.targets) meta.targets={protein:DEFAULTS.protein,water:DEFAULTS.water,steps:DEFAULTS.steps,sleep:DEFAULTS.sleep,kcal:DEFAULTS.kcal};
+      if(meta.targets.kcal==null) meta.targets.kcal=DEFAULTS.kcal;
       if(meta.lenDays==null) meta.lenDays=DEFAULTS.lenDays;
       persist(); closeIO(); current=new Date(today); render(); toast("Restored");
     });
@@ -834,5 +907,6 @@
   render();
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
